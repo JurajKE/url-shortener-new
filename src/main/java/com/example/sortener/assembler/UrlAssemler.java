@@ -1,7 +1,10 @@
 package com.example.sortener.assembler;
 
 import com.example.sortener.dto.UrlDto;
+import com.example.sortener.entity.Account;
 import com.example.sortener.entity.Url;
+import com.example.sortener.repository.AccountRepository;
+import com.example.sortener.repository.UrlRepository;
 import com.google.common.hash.Hashing;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +17,13 @@ import static java.util.Objects.isNull;
 public class UrlAssemler {
 
     private final AccountAssembler accountAssembler;
+    private final AccountRepository accountRepository;
+    private final UrlRepository urlRepository;
 
-    public UrlAssemler(AccountAssembler accountAssembler) {
+    public UrlAssemler(AccountAssembler accountAssembler, AccountRepository accountRepository, UrlRepository urlRepository) {
         this.accountAssembler = accountAssembler;
+        this.accountRepository = accountRepository;
+        this.urlRepository = urlRepository;
     }
 
     public Url assembleEntity(UrlDto dto) {
@@ -25,9 +32,14 @@ public class UrlAssemler {
         }
 
         Url url = new Url();
+        url.setId(1);
         url.setOriginalUrl(dto.getUrl());
         url.setShortUrl("http://short.com/" + encodedUrl(dto.getUrl()));
         url.setRedirectType(dto.getRedirectType());
+//        Account account = new Account();
+//        account.setId(12);
+        Account juraj = accountRepository.findByAccountId("juraj");
+        url.setAccountId(juraj);
 
         return url;
     }

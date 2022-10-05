@@ -12,16 +12,16 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 public class AccountAssembler {
 
     public Account assembleEntity(String accountId) {
-        if (isEmpty(accountId)) {
+        if (accountId == null ) {
             return null;
         }
-        Account url = new Account();
-        url.setAccountId(accountId);
-        url.setUrlList(null);
-        url.setPassword(generatePasword());
-        url.setId(12);
+        Account account = new Account();
+        account.setAccountId(accountId);
+        account.setUrlList(null);
+        account.setPassword(generatePasword());
+        account.setId(1);
 
-        return url;
+        return account;
     }
 
     public ResponseDto assembleResponse(Account account) {

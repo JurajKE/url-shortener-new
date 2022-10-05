@@ -16,7 +16,7 @@ public class Account {
     private Integer id;
     private String accountId;
     private String password;
-    @OneToMany
+    @OneToMany(mappedBy="accountId")
     List<Url> urlList = new ArrayList<>();
 
 }
