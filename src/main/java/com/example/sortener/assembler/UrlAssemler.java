@@ -26,7 +26,7 @@ public class UrlAssemler {
         this.urlRepository = urlRepository;
     }
 
-    public Url assembleEntity(UrlDto dto) {
+    public Url assembleEntity(UrlDto dto, String userId) {
         if (isNull(dto)) {
             return null;
         }
@@ -36,10 +36,12 @@ public class UrlAssemler {
         url.setOriginalUrl(dto.getUrl());
         url.setShortUrl("http://short.com/" + encodedUrl(dto.getUrl()));
         url.setRedirectType(dto.getRedirectType());
+        Account byAccountId = accountRepository.findByAccountId(userId);
+        url.setAccountId(byAccountId);
 //        Account account = new Account();
 //        account.setId(12);
-        Account juraj = accountRepository.findByAccountId("juraj");
-        url.setAccountId(juraj);
+//        Account juraj = accountRepository.findByAccountId("juraj");
+//        url.setAccountId(juraj);
 
         return url;
     }

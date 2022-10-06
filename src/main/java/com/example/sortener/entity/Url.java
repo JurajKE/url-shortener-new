@@ -15,7 +15,7 @@ public class Url {
     private int calls;
     private int redirectType;
     @ManyToOne
-    @JoinColumn(name="account_id", nullable=false)
+    @JoinColumn(name="account_id",referencedColumnName = "id")
     private Account accountId;
 
 }

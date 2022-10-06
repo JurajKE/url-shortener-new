@@ -8,6 +8,8 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Data
 @Entity
 public class Account {
@@ -16,7 +18,7 @@ public class Account {
     private Integer id;
     private String accountId;
     private String password;
-    @OneToMany(mappedBy="accountId")
-    List<Url> urlList = new ArrayList<>();
+    @OneToMany(mappedBy="accountId", cascade = ALL)
+    List<Url> urlList;
 
 }
