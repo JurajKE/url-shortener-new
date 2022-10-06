@@ -19,7 +19,7 @@ public class AuthenticateValidator {
         this.accountRepository = accountRepository;
     }
 
-    public boolean authenticate(HttpServletRequest request) {
+    public void authenticate(HttpServletRequest request) {
         String upd = request.getHeader("authorization");
         String credentials = new String(Base64.decodeBase64(upd.substring(6)));
 
@@ -27,10 +27,9 @@ public class AuthenticateValidator {
         String password = credentials.split(":")[1];
         Account byAccountId = accountRepository.findByAccountId(userName);
         accountId = userName;
-        if (byAccountId.getPassword().equals(password)) {
-            return true;
+        if (!byAccountId.getPassword().equals(password)) {
+            throw new RuntimeException("Bad credentials");
         }
-        return false;
     }
 
 }

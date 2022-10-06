@@ -9,6 +9,8 @@ import javax.persistence.*;
 public class Url {
 
     @Id
+    @SequenceGenerator(name="SEQ_GEN", sequenceName="SEQ_JUST_FOR_TEST", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN")
     private int id;
     private String originalUrl;
     private String shortUrl;
