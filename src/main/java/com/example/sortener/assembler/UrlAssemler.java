@@ -12,6 +12,9 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.google.common.hash.Hashing.murmur3_32;
+import static java.lang.System.currentTimeMillis;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.isNull;
 
 @Component
@@ -28,11 +31,11 @@ public class UrlAssemler {
             return null;
         }
 
-        Url url = new Url();
+        var url = new Url();
         url.setOriginalUrl(dto.getUrl());
         url.setShortUrl("http://short.com/" + encodedUrl(dto.getUrl()));
         url.setRedirectType(dto.getRedirectType());
-        Account byAccountId = accountRepository.findByAccountId(userId);
+        var byAccountId = accountRepository.findByAccountId(userId);
         url.setAccountId(byAccountId);
 
         return url;
@@ -43,21 +46,21 @@ public class UrlAssemler {
             return null;
         }
 
-        UrlDto urlDto = new UrlDto();
+        var urlDto = new UrlDto();
         urlDto.setShortUrl(url.getShortUrl());
         urlDto.setRedirectType(url.getRedirectType());
 
         return urlDto;
     }
 
-    public List<UrlDto> assmebleDtos(List<Url> urlList){
+    public List<UrlDto> assmebleDtos(List<Url> urlList) {
         return urlList.stream().map(this::assembleDto).collect(Collectors.toList());
     }
 
     public String encodedUrl(String url) {
-        String encodedUrl = "";
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        encodedUrl = Hashing.murmur3_32().hashString(url.concat(timestamp.toString()), StandardCharsets.UTF_8).toString();
+        var encodedUrl = "";
+        var timestamp = new Timestamp(currentTimeMillis());
+        encodedUrl = murmur3_32().hashString(url.concat(timestamp.toString()), UTF_8).toString();
         return encodedUrl;
     }
 
