@@ -1,18 +1,16 @@
 package com.example.sortener.Service;
 
-import com.example.sortener.assembler.UrlAssemler;
+import com.example.sortener.assembler.UrlAssembler;
 import com.example.sortener.dto.UrlDto;
 import com.example.sortener.exceptions.RecordFoundException;
 import com.example.sortener.repository.UrlRepository;
 import com.example.sortener.validator.ApplicationValidator;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 
@@ -20,18 +18,18 @@ import static java.util.Optional.ofNullable;
 public class UrlService {
 
     private final UrlRepository urlRepository;
-    private final UrlAssemler urlAssemler;
+    private final UrlAssembler urlAssembler;
     private final ApplicationValidator validator;
 
-    public UrlService(UrlRepository urlRepository, UrlAssemler urlAssemler, ApplicationValidator validator) {
+    public UrlService(UrlRepository urlRepository, UrlAssembler urlAssembler, ApplicationValidator validator) {
         this.urlRepository = urlRepository;
-        this.urlAssemler = urlAssemler;
+        this.urlAssembler = urlAssembler;
         this.validator = validator;
     }
 
     public UrlDto saveShortUrl(UrlDto dto) {
         validator.validateUrl(dto.getUrl());
-        return urlAssemler.assembleDto(urlRepository.save(urlAssemler.assembleEntity(dto, validator.getAccountId())));
+        return urlAssembler.assembleDto(urlRepository.save(urlAssembler.assembleEntity(dto, validator.getAccountId())));
     }
 
     public List<UrlDto> getStatistics(String accountId) {
@@ -39,7 +37,7 @@ public class UrlService {
         var dtosListUrls = new ArrayList<UrlDto>();
 
         listUrls.ifPresentOrElse(x -> {
-            dtosListUrls.addAll(urlAssemler.assmebleDtos(listUrls.get()));
+            dtosListUrls.addAll(urlAssembler.assmebleDtos(listUrls.get()));
         }, () -> {
             throw new RecordFoundException("Account with this account id " + accountId + " does not exist");
         });

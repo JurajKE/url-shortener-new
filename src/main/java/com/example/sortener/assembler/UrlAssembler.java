@@ -1,28 +1,25 @@
 package com.example.sortener.assembler;
 
 import com.example.sortener.dto.UrlDto;
-import com.example.sortener.entity.Account;
 import com.example.sortener.entity.Url;
 import com.example.sortener.repository.AccountRepository;
-import com.google.common.hash.Hashing;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.google.common.hash.Hashing.murmur3_32;
 import static java.lang.System.currentTimeMillis;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.isNull;
+import static java.util.stream.Collectors.toList;
 
 @Component
-public class UrlAssemler {
+public class UrlAssembler {
 
     private final AccountRepository accountRepository;
 
-    public UrlAssemler(AccountRepository accountRepository) {
+    public UrlAssembler(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
@@ -54,7 +51,7 @@ public class UrlAssemler {
     }
 
     public List<UrlDto> assmebleDtos(List<Url> urlList) {
-        return urlList.stream().map(this::assembleDto).collect(Collectors.toList());
+        return urlList.stream().map(this::assembleDto).collect(toList());
     }
 
     public String encodedUrl(String url) {
