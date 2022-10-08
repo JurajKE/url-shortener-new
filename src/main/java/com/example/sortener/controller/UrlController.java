@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class UrlController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UrlDto> registerUrl(HttpServletRequest httpServletRequest, @RequestBody UrlDto dto){
+    public ResponseEntity<UrlDto> registerUrl(HttpServletRequest httpServletRequest, @RequestBody UrlDto dto) {
         validator.authenticate(httpServletRequest);
         return new ResponseEntity<>(urlService.saveShortUrl(dto), HttpStatus.OK);
     }
@@ -34,6 +35,12 @@ public class UrlController {
     public ResponseEntity<List<UrlDto>> getStatistics(HttpServletRequest httpServletRequest, @PathVariable String accountId) throws Exception {
         validator.authenticate(httpServletRequest);
         return new ResponseEntity<>(urlService.getStatistics(accountId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{shortlink}")
+    public void redirectToOriginalUrl(@PathVariable String shortlink, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+        validator.authenticate(httpServletRequest);
+        urlService.redirectToOriginalUrl(shortlink, response);
     }
 
 }

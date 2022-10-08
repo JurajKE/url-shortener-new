@@ -33,7 +33,7 @@ public class UrlAssemler {
 
         var url = new Url();
         url.setOriginalUrl(dto.getUrl());
-        url.setShortUrl("http://short.com/" + encodedUrl(dto.getUrl()));
+        url.setShortUrl(encodedUrl(dto.getUrl()));
         url.setRedirectType(dto.getRedirectType());
         var byAccountId = accountRepository.findByAccountId(userId);
         url.setAccountId(byAccountId);

@@ -14,23 +14,22 @@ import static org.apache.commons.lang3.RandomStringUtils.random;
 public class AccountAssembler {
 
     public Account assembleEntity(String accountId) {
-        if (accountId == null) {
+        if (isNull(accountId)) {
             return null;
         }
 
         var account = new Account();
         account.setAccountId(accountId);
-//        account.setUrlList(null);
         account.setPassword(random(8, CHARACTERS));
 
         return account;
-
     }
 
     public ResponseDto assembleResponse(Account account) {
         if (isNull(account)) {
             return null;
         }
+
         var response = new ResponseDto();
         response.setPassword(account.getPassword());
         response.setDescription(OPENED_ACCOUNT);

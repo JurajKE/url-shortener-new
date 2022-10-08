@@ -11,5 +11,6 @@ import java.util.List;
 public interface UrlRepository extends JpaRepository<Url, Integer> {
 
     List<Url> findByAccountId_AccountId(String accountId);
+    Url findByShortUrl(String shortUrl);
 
 }
