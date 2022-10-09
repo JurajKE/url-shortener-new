@@ -1,15 +1,15 @@
 package com.example.sortener.validator;
 
-import com.example.sortener.entity.Account;
 import com.example.sortener.exceptions.RecordFoundException;
 import com.example.sortener.repository.AccountRepository;
 import lombok.Data;
 import org.apache.commons.validator.routines.UrlValidator;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static java.util.Objects.isNull;
+import static org.apache.tomcat.util.codec.binary.Base64.decodeBase64;
 
 @Data
 @Component
@@ -24,15 +24,15 @@ public class ApplicationValidator {
 
     public void authenticate(HttpServletRequest request) {
         var upd = request.getHeader("authorization");
-        var credentials = new String(Base64.decodeBase64(upd.substring(6)));
+        var credentials = new String(decodeBase64(upd.substring(6)));
 
         var userName = credentials.split(":")[0];
         var password = credentials.split(":")[1];
-        var byAccountId = accountRepository.findByAccountId(userName);
-        accountId = userName;
-        if (!byAccountId.getPassword().equals(password)) {
-            throw new RuntimeException("Bad credentials");
+        var accountByUsername = accountRepository.findByAccountId(userName);
+        if (isNull(accountByUsername) || !password.equals(accountByUsername.getPassword())) {
+            throw new RecordFoundException("Not valid credentials");
         }
+        accountId = userName;
     }
 
     public void validateUrl(String url) {

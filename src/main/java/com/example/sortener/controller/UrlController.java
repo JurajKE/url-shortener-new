@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "url")
@@ -32,14 +32,14 @@ public class UrlController {
     }
 
     @GetMapping("/statistics/{accountId}")
-    public ResponseEntity<List<UrlDto>> getStatistics(HttpServletRequest httpServletRequest, @PathVariable String accountId) throws Exception {
+    public ResponseEntity<Map> getStatistics(HttpServletRequest httpServletRequest, @PathVariable String accountId) throws Exception {
         validator.authenticate(httpServletRequest);
         return new ResponseEntity<>(urlService.getStatistics(accountId), HttpStatus.OK);
     }
 
     @GetMapping("/{shortlink}")
     public void redirectToOriginalUrl(@PathVariable String shortlink, HttpServletResponse response, HttpServletRequest httpServletRequest) {
-        validator.authenticate(httpServletRequest);
+//        validator.authenticate(httpServletRequest);
         urlService.redirectToOriginalUrl(shortlink, response);
     }
 

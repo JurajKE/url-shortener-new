@@ -2,11 +2,11 @@ package com.example.sortener.Service;
 
 import com.example.sortener.assembler.AccountAssembler;
 import com.example.sortener.dto.ResponseDto;
-import com.example.sortener.exceptions.RecordFoundException;
+import com.example.sortener.entity.Account;
 import com.example.sortener.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
-import static java.util.Optional.ofNullable;
+import static java.util.Objects.isNull;
 
 @Service
 public class AccountService {
@@ -20,11 +20,10 @@ public class AccountService {
     }
 
     public ResponseDto saveAccount(String accountId) {
-        ofNullable(accountRepository.findByAccountId(accountId)).ifPresent(account -> {
-            throw new RecordFoundException("Account id '" + accountId + " already exist");
-        });
-        return accountAssembler.assembleResponse(accountRepository.save(accountAssembler.assembleEntity(accountId)));
-//        return accountAssembler.assembleFailedResponse();
+        Account byAccountId = accountRepository.findByAccountId(accountId);
+        return isNull(byAccountId) ?
+                accountAssembler.assembleResponse(accountRepository.save(accountAssembler.assembleEntity(accountId)))
+                : accountAssembler.assembleFailedResponse();
     }
 
 }

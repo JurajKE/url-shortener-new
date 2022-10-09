@@ -10,5 +10,6 @@ public class UrlDto {
     private String url;
     private int redirectType;
     private String shortUrl;
+    private int calls;
 
 }
