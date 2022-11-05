@@ -31,7 +31,7 @@ public class UrlAssembler {
         var url = new Url();
         url.setOriginalUrl(dto.getUrl());
         url.setShortUrl(encodedUrl(dto.getUrl()));
-        url.setRedirectType(dto.getRedirectType());
+        url.setRedirectType(isNull(dto.getRedirectType()) ? 302 : dto.getRedirectType());
         var account = accountRepository.findByAccountId(userId);
         url.setAccountId(account);
 
@@ -45,8 +45,6 @@ public class UrlAssembler {
 
         var urlDto = new UrlDto();
         urlDto.setShortUrl(url.getShortUrl());
-//        urlDto.setRedirectType(url.getRedirectType());
-//        urlDto.setCalls(url.getCalls());
 
         return urlDto;
     }

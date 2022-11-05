@@ -2,28 +2,14 @@ package com.example.sortener.assembler;
 
 import com.example.sortener.dto.ResponseDto;
 import com.example.sortener.entity.Account;
-import com.example.sortener.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 
-import static com.example.sortener.Constants.AppConstants.*;
+import static com.example.sortener.Constants.AppConstants.EXIST_ACCOUNT;
+import static com.example.sortener.Constants.AppConstants.OPENED_ACCOUNT;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static org.apache.commons.lang3.RandomStringUtils.random;
 
 @Component
 public class AccountAssembler {
-
-    public Account assembleEntity(String accountId) {
-        if (isNull(accountId)) {
-            return null;
-        }
-
-        var account = new Account();
-        account.setAccountId(accountId);
-        account.setPassword(random(8, CHARACTERS));
-
-        return account;
-    }
 
     public ResponseDto assembleResponse(Account account) {
         if (isNull(account)) {
