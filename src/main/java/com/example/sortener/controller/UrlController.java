@@ -19,7 +19,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping(value = "url")
+@RequestMapping
 @EnableWebMvc
 @RequiredArgsConstructor
 public class UrlController {

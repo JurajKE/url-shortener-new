@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+import static com.example.sortener.Constants.AppConstants.APP_LINK;
 import static java.util.Objects.isNull;
 import static java.util.Optional.ofNullable;
 
@@ -40,7 +41,7 @@ public class UrlAssembler {
         }
 
         var urlDto = new UrlDto();
-        urlDto.setShortUrl(url.getShortUrl());
+        urlDto.setShortUrl(APP_LINK + url.getShortUrl());
 
         return urlDto;
     }
