@@ -1,7 +1,7 @@
 package com.example.sortener.controller;
 
 import com.example.sortener.Service.AccountService;
-import com.example.sortener.dto.AccountDto;
+import com.example.sortener.dto.AccountBaseDto;
 import com.example.sortener.dto.ResponseDto;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class AccountController {
     private final Logger logger = getLogger(AccountController.class);
 
     @PostMapping
-    public ResponseEntity<ResponseDto> registerAccount(@RequestBody AccountDto accountId) {
+    public ResponseEntity<ResponseDto> registerAccount(@RequestBody AccountBaseDto accountId) {
         var runTime = currentTimeMillis();
         var account = accountService.saveAccount(accountId);
         logger.debug("Register new account: {} took {} millis", accountId, currentTimeMillis() - runTime);

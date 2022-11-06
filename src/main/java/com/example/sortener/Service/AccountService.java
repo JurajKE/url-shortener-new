@@ -1,7 +1,7 @@
 package com.example.sortener.Service;
 
 import com.example.sortener.assembler.AccountAssembler;
-import com.example.sortener.dto.AccountDto;
+import com.example.sortener.dto.AccountBaseDto;
 import com.example.sortener.dto.ResponseDto;
 import com.example.sortener.entity.Account;
 import com.example.sortener.repository.AccountRepository;
@@ -25,11 +25,11 @@ public class AccountService {
     @NonNull
     private final ApplicationValidator validator;
 
-    public ResponseDto saveAccount(AccountDto accountDto) {
-        validator.validateAccount(accountDto);
-        Account account = accountRepository.findByAccountId(accountDto.getAccountId());
+    public ResponseDto saveAccount(AccountBaseDto accountBaseDto) {
+        validator.validateAccount(accountBaseDto);
+        Account account = accountRepository.findByAccountId(accountBaseDto.getAccountId());
         return isNull(account) ?
-                accountAssembler.assembleResponse(accountRepository.save(new Account(accountDto.getAccountId(), random(8, CHARACTERS))))
+                accountAssembler.assembleResponse(accountRepository.save(new Account(accountBaseDto.getAccountId(), random(8, CHARACTERS))))
                 : accountAssembler.assembleFailedResponse();
         //TODO change Status Code
     }

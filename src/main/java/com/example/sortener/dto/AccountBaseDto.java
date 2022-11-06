@@ -3,7 +3,7 @@ package com.example.sortener.dto;
 import lombok.Data;
 
 @Data
-public class AccountDto {
+public class AccountBaseDto {
     private String accountId;
 
 }

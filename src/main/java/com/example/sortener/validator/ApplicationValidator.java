@@ -1,6 +1,6 @@
 package com.example.sortener.validator;
 
-import com.example.sortener.dto.AccountDto;
+import com.example.sortener.dto.AccountBaseDto;
 import com.example.sortener.exceptions.MissingHeaderInfoException;
 import com.example.sortener.exceptions.RecordFoundException;
 import com.example.sortener.repository.AccountRepository;
@@ -37,7 +37,7 @@ public class ApplicationValidator {
         var password = credentials.split(":")[1];
         var accountByUsername = accountRepository.findByAccountId(userName);
         if (isNull(accountByUsername) || !password.equals(accountByUsername.getPassword())) {
-            throw new RecordFoundException("Not valid credentials");
+            throw new MissingHeaderInfoException("Not valid credentials");
         }
         return userName;
     }
@@ -49,8 +49,8 @@ public class ApplicationValidator {
         }
     }
 
-    public void validateAccount(AccountDto accountDto){
-        if (isNull(accountDto.getAccountId()) || isEmpty(accountDto.getAccountId())){
+    public void validateAccount(AccountBaseDto accountBaseDto){
+        if (isNull(accountBaseDto.getAccountId()) || isEmpty(accountBaseDto.getAccountId())){
             throw new MissingHeaderInfoException("Not valid account ID");
         }
     }
