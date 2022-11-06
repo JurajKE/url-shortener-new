@@ -1,6 +1,6 @@
 package com.example.sortener.assembler;
 
-import com.example.sortener.dto.ResponseDto;
+import com.example.sortener.dto.account.ResponseAccountDto;
 import com.example.sortener.entity.Account;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class AccountAssemblerTest {
 
     @Test
     public void assembleResponse_whenEntityNotNull_returnAssembledResponse() {
-        ResponseDto result = accountAssembler.assembleResponse(account);
+        ResponseAccountDto result = accountAssembler.assembleResponse(account);
 
         assertNotNull(result);
         assertEquals(OPENED_ACCOUNT, result.getDescription());
@@ -35,7 +35,7 @@ public class AccountAssemblerTest {
 
     @Test
     public void assemblesFailResponse_returnAssembledFailResponse() {
-        ResponseDto result = accountAssembler.assembleFailedResponse();
+        ResponseAccountDto result = accountAssembler.assembleFailedResponse();
 
         assertNotNull(result);
         assertEquals(EXIST_ACCOUNT, result.getDescription());

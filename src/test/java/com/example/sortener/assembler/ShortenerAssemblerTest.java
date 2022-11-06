@@ -1,9 +1,11 @@
 package com.example.sortener.assembler;
 
-import com.example.sortener.dto.UrlDto;
+import com.example.sortener.dto.shortener.RequestUrlDto;
+import com.example.sortener.dto.shortener.ResponseUrlDto;
 import com.example.sortener.entity.Account;
 import com.example.sortener.entity.Url;
 import com.example.sortener.repository.AccountRepository;
+import com.example.sortener.validator.ApplicationValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,24 +13,29 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static com.example.sortener.Constants.AppConstants.APP_LINK;
 import static com.example.sortener.constants.TestConstants.*;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UrlAssemblerTest {
+public class ShortenerAssemblerTest {
 
     @InjectMocks
-    private UrlAssembler urlAssembler;
+    private ShortenerAssembler shortenerAssembler;
     @Mock
     private AccountRepository accountRepository;
-    private UrlDto urlDto;
+    @Mock
+    private ApplicationValidator validator;
+    private RequestUrlDto urlDto;
     private Url url;
 
     @Test
     public void assembleEntity_whenDtoNotNull_returnAssembledEntity() {
         when(accountRepository.findByAccountId(ACCOUNT_ID)).thenReturn(new Account());
-        Url result = urlAssembler.assembleEntity(urlDto);
+        when(validator.encodedUrl(any())).thenReturn(SHORT_URL);
+        Url result = shortenerAssembler.assembleEntity(urlDto, ACCOUNT_ID);
 
         assertNotNull(result);
         assertEquals(urlDto.getUrl(), result.getOriginalUrl());
@@ -39,27 +46,26 @@ public class UrlAssemblerTest {
 
     @Test
     public void assembleEntity_whenDtoIsNull_returnNull() {
-        assertNull(urlAssembler.assembleEntity(null));
+        assertNull(shortenerAssembler.assembleEntity(null, null));
     }
 
     @Test
     public void assembleDto_whenEntityNotNull_returnAssembledDto() {
-        UrlDto result = urlAssembler.assembleDto(url);
+        ResponseUrlDto result = shortenerAssembler.assembleDto(url);
 
         assertNotNull(result);
-        assertEquals(SHORT_URL, result.getShortUrl());
+        assertEquals(APP_LINK + SHORT_URL, result.getShortUrl());
     }
 
     @Test
     public void assembleDto_whenEntityIsNull_returnNull() {
-        assertNull(urlAssembler.assembleDto(null));
+        assertNull(shortenerAssembler.assembleDto(null));
     }
 
     @Before
     public void init() {
-        urlDto = new UrlDto();
+        urlDto = new RequestUrlDto();
         urlDto.setUrl(URL);
-        urlDto.setAccountId(ACCOUNT_ID);
 
         url = new Url();
         url.setShortUrl(SHORT_URL);

@@ -1,7 +1,8 @@
 package com.example.sortener.controller;
 
-import com.example.sortener.Service.UrlService;
-import com.example.sortener.dto.UrlDto;
+import com.example.sortener.Service.ShortenerService;
+import com.example.sortener.dto.shortener.RequestUrlDto;
+import com.example.sortener.dto.shortener.ResponseUrlDto;
 import com.example.sortener.exceptions.CustomExceptionHandler;
 import com.example.sortener.validator.ApplicationValidator;
 import org.junit.Before;
@@ -28,23 +29,23 @@ public class UrlControllerTest {
 
     private MockMvc mockMvc;
     @InjectMocks
-    private UrlController controller;
+    private ShortenerController controller;
 
     @Mock
-    private UrlService urlService;
+    private ShortenerService shortenerService;
 
     @Mock
     private ApplicationValidator validator;
 
     @Mock
     HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
-    private final UrlDto dto = new UrlDto();
+    private final RequestUrlDto dto = new RequestUrlDto();
 
     @Before
     public void init() {
         mockMvc = standaloneSetup(controller).setControllerAdvice(new CustomExceptionHandler()).build();
         when(validator.authenticate(any())).thenReturn(ACCOUNT_ID);
-        when(urlService.saveShortUrl(any())).thenReturn(dto);
+        when(shortenerService.saveShortUrl(any(), any())).thenReturn(new ResponseUrlDto());
 
         dto.setUrl(URL);
     }
@@ -55,16 +56,7 @@ public class UrlControllerTest {
                 .andExpect(status().isOk()).andReturn();
 
         verify(validator, times(1)).authenticate(any());
-        verify(urlService, times(1)).saveShortUrl(any());
-    }
-
-    @Test
-    public void getStatisticsForUser_whenAccountIdIsValid_returnOk() throws Exception {
-        mockMvc.perform(get("/statistics/" + "juraj", mockedRequest).contentType(APPLICATION_JSON_VALUE).content("{}"))
-                .andExpect(status().isOk()).andReturn();
-
-        verify(validator, times(1)).authenticate(any());
-        verify(urlService, times(1)).getStatistics(any());
+        verify(shortenerService, times(1)).saveShortUrl(any(), any());
     }
 
     @Test
@@ -72,7 +64,7 @@ public class UrlControllerTest {
         mockMvc.perform(get("/" + SHORT_URL).contentType(APPLICATION_JSON_VALUE).content("{}"))
                 .andExpect(status().isOk()).andReturn();
 
-        verify(urlService, times(1)).redirectToOriginalUrl(any(), any());
+        verify(shortenerService, times(1)).redirectToOriginalUrl(any(), any());
     }
 
 }

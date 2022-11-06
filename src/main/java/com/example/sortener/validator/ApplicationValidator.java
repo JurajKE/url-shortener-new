@@ -1,6 +1,6 @@
 package com.example.sortener.validator;
 
-import com.example.sortener.dto.AccountBaseDto;
+import com.example.sortener.dto.account.RequestAccountDto;
 import com.example.sortener.exceptions.MissingHeaderInfoException;
 import com.example.sortener.exceptions.RecordFoundException;
 import com.example.sortener.repository.AccountRepository;
@@ -49,8 +49,12 @@ public class ApplicationValidator {
         }
     }
 
-    public void validateAccount(AccountBaseDto accountBaseDto){
-        if (isNull(accountBaseDto.getAccountId()) || isEmpty(accountBaseDto.getAccountId())){
+    public String getAccountId(HttpServletRequest request) {
+        return new String(decodeBase64(request.getHeader("authorization").substring(6))).split(":")[0];
+    }
+
+    public void validateAccount(RequestAccountDto requestAccountDto){
+        if (isNull(requestAccountDto.getAccountId()) || isEmpty(requestAccountDto.getAccountId())){
             throw new MissingHeaderInfoException("Not valid account ID");
         }
     }

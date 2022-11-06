@@ -1,6 +1,6 @@
 package com.example.sortener.assembler;
 
-import com.example.sortener.dto.ResponseDto;
+import com.example.sortener.dto.account.ResponseAccountDto;
 import com.example.sortener.entity.Account;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +11,12 @@ import static java.util.Objects.isNull;
 @Component
 public class AccountAssembler {
 
-    public ResponseDto assembleResponse(Account account) {
+    public ResponseAccountDto assembleResponse(Account account) {
         if (isNull(account)) {
             return null;
         }
 
-        var response = new ResponseDto();
+        var response = new ResponseAccountDto();
         response.setPassword(account.getPassword());
         response.setDescription(OPENED_ACCOUNT);
         response.setSuccess(true);
@@ -24,8 +24,8 @@ public class AccountAssembler {
         return response;
     }
 
-    public ResponseDto assembleFailedResponse() {
-        var response = new ResponseDto();
+    public ResponseAccountDto assembleFailedResponse() {
+        var response = new ResponseAccountDto();
         response.setDescription(EXIST_ACCOUNT);
         response.setSuccess(false);
 
