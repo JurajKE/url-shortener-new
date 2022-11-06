@@ -7,7 +7,6 @@ import java.util.Map;
 
 @Data
 public class FinalResponseDto {
-
     Map<String, Integer> data = new HashMap<>();
 
 }

@@ -22,7 +22,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @EnableWebMvc
 @RequiredArgsConstructor
 public class AccountController {
-
     @NonNull
     private final AccountService accountService;
     private final Logger logger = getLogger(AccountController.class);

@@ -30,7 +30,7 @@ public class UrlService {
 
     public UrlDto saveShortUrl(UrlDto dto) {
         validator.validateUrl(dto.getUrl());
-        return urlAssembler.assembleDto(urlRepository.save(urlAssembler.assembleEntity(dto, validator.getAccountId())));
+        return urlAssembler.assembleDto(urlRepository.save(urlAssembler.assembleEntity(dto)));
     }
 
     public Map<String, Integer> getStatistics(String accountId) {

@@ -32,7 +32,7 @@ public class UrlController {
 
     @PostMapping("/register")
     public ResponseEntity<UrlDto> registerUrl(HttpServletRequest httpServletRequest, @RequestBody UrlDto dto) {
-        validator.authenticate(httpServletRequest);
+        dto.setAccountId(validator.authenticate(httpServletRequest));
         long runTime = currentTimeMillis();
         var url = urlService.saveShortUrl(dto);
         logger.debug("Register new url: {} took {} millis", url.getUrl(), currentTimeMillis() - runTime);
@@ -40,8 +40,7 @@ public class UrlController {
     }
 
     @GetMapping("/statistics/{accountId}")
-    public ResponseEntity<Map<String, Integer>> getStatistics(HttpServletRequest httpServletRequest,
-                                                             @PathVariable String accountId) {
+    public ResponseEntity<Map<String, Integer>> getStatistics(HttpServletRequest httpServletRequest, @PathVariable String accountId) {
         validator.authenticate(httpServletRequest);
         long runTime = currentTimeMillis();
         var statistics = urlService.getStatistics(accountId);
@@ -50,7 +49,7 @@ public class UrlController {
     }
 
     @GetMapping("/{shortlink}")
-    public void redirectToOriginalUrl(@PathVariable String shortlink, HttpServletResponse response) {
+    public void redirectToOriginalUrl(@PathVariable(value = "shortlink") String shortlink, HttpServletResponse response) {
         long runTime = currentTimeMillis();
         urlService.redirectToOriginalUrl(shortlink, response);
         logger.debug("Redirect from short link: {} took {} millis", shortlink, currentTimeMillis() - runTime);
