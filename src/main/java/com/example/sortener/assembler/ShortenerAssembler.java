@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-import static com.example.sortener.Constants.AppConstants.APP_LINK;
+import static com.example.sortener.constants.AppConstants.APP_LINK;
 import static java.util.Objects.isNull;
 import static java.util.Optional.ofNullable;
 

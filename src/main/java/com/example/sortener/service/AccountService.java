@@ -1,4 +1,4 @@
-package com.example.sortener.Service;
+package com.example.sortener.service;
 
 import com.example.sortener.assembler.AccountAssembler;
 import com.example.sortener.dto.account.RequestAccountDto;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-import static com.example.sortener.Constants.AppConstants.CHARACTERS;
+import static com.example.sortener.constants.AppConstants.CHARACTERS;
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.lang3.RandomStringUtils.random;

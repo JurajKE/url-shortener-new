@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static com.example.sortener.Constants.AppConstants.APP_LINK;
+import static com.example.sortener.constants.AppConstants.APP_LINK;
 import static com.example.sortener.constants.TestConstants.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;

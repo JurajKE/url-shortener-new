@@ -1,4 +1,4 @@
-package com.example.sortener.Service;
+package com.example.sortener.service;
 
 import com.example.sortener.assembler.ShortenerAssembler;
 import com.example.sortener.dto.shortener.RequestUrlDto;

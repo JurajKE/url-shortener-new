@@ -1,6 +1,6 @@
 package com.example.sortener.controller;
 
-import com.example.sortener.Service.AccountService;
+import com.example.sortener.service.AccountService;
 import com.example.sortener.dto.account.RequestAccountDto;
 import com.example.sortener.dto.account.ResponseAccountDto;
 import com.example.sortener.validator.ApplicationValidator;
@@ -39,7 +39,7 @@ public class AccountController {
 
     @GetMapping("statistics/{accountId}")
     public ResponseEntity<Map<String, Integer>> getStatistics(HttpServletRequest httpServletRequest, @PathVariable String accountId) {
-        validator.authenticate(httpServletRequest);
+//        validator.authenticate(httpServletRequest);
         long runTime = currentTimeMillis();
         var statistics = accountService.getStatistics(accountId);
         logger.debug("Getting statistics for user: {} took {} millis", accountId, currentTimeMillis() - runTime);

@@ -1,6 +1,6 @@
 package com.example.sortener.controller;
 
-import com.example.sortener.Service.ShortenerService;
+import com.example.sortener.service.ShortenerService;
 import com.example.sortener.dto.shortener.RequestUrlDto;
 import com.example.sortener.dto.shortener.ResponseUrlDto;
 import com.example.sortener.validator.ApplicationValidator;
