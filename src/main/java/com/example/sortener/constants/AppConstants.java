@@ -12,6 +12,12 @@ public class AppConstants {
             "2. JAR File is contained in root/target/url/Shortener-0.0.1-SNAPSHOT.jar \n\n " +
             "3. Find the file through any kind of cmd/terminal and run command java-jar-urlShortener-0.0.1-UrlShortener.jar \n\n " +
             "4. This will start up whole application \n\n " +
-            "5. Add row (127.0.0.1) \n\n\n 1. Swagger je tam\n\n 2. Treba ti ucet ";
+            "5. Add row (127.0.0.1) you your host file\n\n\n" +
+            "USAGE\n\n\n " +
+            "1. Swagger documentation can be found at localhost:8080/swagger/ui/index.html -> Here you can find all endpoints.\n\n " +
+            "2. For using app you need an account. \n\n " +
+            "3. Once account is create, endpoints are using basic auth (name/password)\n\n " +
+            "4. For shortening of URL please use /register endpoint whitch will return short version of URL \n\n " +
+            "";
 
 }
