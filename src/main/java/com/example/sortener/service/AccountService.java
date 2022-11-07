@@ -36,12 +36,11 @@ public class AccountService {
         return isNull(account) ?
                 accountAssembler.assembleResponse(accountRepository.save(new Account(requestAccountDto.getAccountId(), random(8, CHARACTERS))))
                 : accountAssembler.assembleFailedResponse();
-        //TODO change Status Code
     }
 
     public Map<String, Integer> getStatistics(String accountId) {
         Account account = accountRepository.findByAccountId(accountId);
-        if (account.getUrlList().isEmpty()) {
+        if (isNull(account)) {
             throw new RecordFoundException("Account with this account id " + accountId + " does not exist");
         }
         return account.getUrlList().stream().collect(toMap(Url::getOriginalUrl, Url::getCalls, (link, calls) -> calls));
