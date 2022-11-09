@@ -32,7 +32,7 @@ public class ShortenerController {
 
     @PostMapping("register")
     public ResponseEntity<ResponseUrlDto> registerUrl(HttpServletRequest httpServletRequest, @RequestBody RequestUrlDto dto) {
-        validator.authenticate(httpServletRequest);
+//        validator.authenticate(httpServletRequest);
         long runTime = currentTimeMillis();
         var url = shortenerService.saveShortUrl(dto, validator.getAccountId(httpServletRequest));
         logger.debug("Register new url: took {} millis", currentTimeMillis() - runTime);
