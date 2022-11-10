@@ -1,5 +1,6 @@
-package com.example.sortener.security;
+package com.example.sortener.config;
 
+import com.example.sortener.security.AuthentificationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,10 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-//    @Autowired
-//    private UserDetailsServiceImpl customUserDetailService;
-
-    public SecurityConfig(AuthentificaionProvider authProvider) {
+    public SecurityConfig(AuthentificationProvider authProvider) {
         this.authProvider = authProvider;
     }
 
@@ -24,11 +22,11 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    private final AuthentificaionProvider authProvider;
+    private final AuthentificationProvider authProvider;
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
+        var authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(authProvider);
         return authenticationManagerBuilder.build();

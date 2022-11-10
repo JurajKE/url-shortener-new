@@ -1,7 +1,8 @@
 package com.example.sortener.security;
 
-import com.example.sortener.entity.Account;
 import com.example.sortener.repository.AccountRepository;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,35 +16,28 @@ import java.util.ArrayList;
 import static java.util.Objects.nonNull;
 
 @Component
-public class AuthentificaionProvider implements AuthenticationProvider {
-
+@RequiredArgsConstructor
+public class AuthentificationProvider implements AuthenticationProvider {
+    @NonNull
     private final AccountRepository accountRepository;
 
-    public AuthentificaionProvider(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
-
     UserDetails isValidUser(String username, String password) {
-        Account account = accountRepository.findByAccountId(username);
-        if (nonNull(account)) {
-            if (account.getPassword().equals(password)) {
-                UserDetails user = User
-                        .withUsername(username)
-                        .password(password)
-                        .authorities(new ArrayList<>())
-                        .build();
-                return user;
-            }
+        var account = accountRepository.findByAccountId(username);
+        if (nonNull(account) && account.getPassword().equals(password)) {
+            return User
+                    .withUsername(username)
+                    .password(password)
+                    .authorities(new ArrayList<>())
+                    .build();
         }
         return null;
     }
 
     @Override
     public Authentication authenticate(Authentication authentication) {
-        String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
-
-        UserDetails userDetails = isValidUser(username, password);
+        var username = authentication.getName();
+        var password = authentication.getCredentials().toString();
+        var userDetails = isValidUser(username, password);
 
         if (userDetails != null) {
             return new UsernamePasswordAuthenticationToken(

@@ -1,17 +1,17 @@
 package com.example.sortener.controller;
 
-import com.example.sortener.service.ShortenerService;
 import com.example.sortener.dto.shortener.RequestUrlDto;
 import com.example.sortener.dto.shortener.ResponseUrlDto;
+import com.example.sortener.service.ShortenerService;
 import com.example.sortener.validator.ApplicationValidator;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static java.lang.System.currentTimeMillis;
@@ -31,10 +31,9 @@ public class ShortenerController {
     private final Logger logger = getLogger(ShortenerController.class);
 
     @PostMapping("register")
-    public ResponseEntity<ResponseUrlDto> registerUrl(HttpServletRequest httpServletRequest, @RequestBody RequestUrlDto dto) {
-//        validator.authenticate(httpServletRequest);
+    public ResponseEntity<ResponseUrlDto> registerUrl(Authentication authentication, @RequestBody RequestUrlDto dto) {
         long runTime = currentTimeMillis();
-        var url = shortenerService.saveShortUrl(dto, validator.getAccountId(httpServletRequest));
+        var url = shortenerService.saveShortUrl(dto, authentication.getName());
         logger.debug("Register new url: took {} millis", currentTimeMillis() - runTime);
         return ok(url);
     }

@@ -11,7 +11,6 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.sql.Timestamp;
 
 import static com.google.common.hash.Hashing.murmur3_32;
@@ -49,12 +48,8 @@ public class ApplicationValidator {
         }
     }
 
-    public String getAccountId(HttpServletRequest request) {
-        return new String(decodeBase64(request.getHeader("authorization").substring(6))).split(":")[0];
-    }
-
-    public void validateAccount(RequestAccountDto requestAccountDto){
-        if (isNull(requestAccountDto.getAccountId()) || isEmpty(requestAccountDto.getAccountId())){
+    public void validateAccount(RequestAccountDto requestAccountDto) {
+        if (isNull(requestAccountDto.getAccountId()) || isEmpty(requestAccountDto.getAccountId())) {
             throw new MissingHeaderInfoException("Not valid account ID");
         }
     }
