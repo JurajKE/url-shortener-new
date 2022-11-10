@@ -32,14 +32,14 @@ public class AccountService {
 
     public ResponseAccountDto saveAccount(RequestAccountDto requestAccountDto) {
         validator.validateAccount(requestAccountDto);
-        Account account = accountRepository.findByAccountId(requestAccountDto.getAccountId());
+        var account = accountRepository.findByAccountId(requestAccountDto.getAccountId());
         return isNull(account) ?
                 accountAssembler.assembleResponse(accountRepository.save(new Account(requestAccountDto.getAccountId(), random(8, CHARACTERS))))
                 : accountAssembler.assembleFailedResponse();
     }
 
     public Map<String, Integer> getStatistics(String accountId) {
-        Account account = accountRepository.findByAccountId(accountId);
+        var account = accountRepository.findByAccountId(accountId);
         if (isNull(account)) {
             throw new RecordFoundException("Account with this account id " + accountId + " does not exist");
         }
