@@ -38,14 +38,4 @@ public class UrlRepositoryTest extends RepositoryConfiguration {
         assertEquals(1, returned.getCalls());
     }
 
-    @Test
-    public void getListUrlsByAccountId_shouldReturnListUrls_whenGivenPattern() {
-        List<Url> returned = urlRepository.findByAccountId_AccountId(ACCOUNT_ID);
-
-        assertNotNull(returned);
-        assertEquals(ACCOUNT_PASSWORD, returned.get(0).getAccountId().getPassword());
-        assertEquals(URL, returned.get(0).getOriginalUrl());
-        assertEquals(SHORT_URL, returned.get(0).getShortUrl());
-    }
-
 }

@@ -10,10 +10,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.sortener.constants.AppConstants.BAD_REQUEST;
+import static com.example.sortener.constants.AppConstants.INCORRECT_REQUEST;
+
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-    private String INCORRECT_REQUEST = "INCORRECT_REQUEST";
-    private String BAD_REQUEST = "BAD_REQUEST";
 
     @ExceptionHandler(RecordFoundException.class)
     public final ResponseEntity<ErrorResponse> handleUserNotFoundException
@@ -32,4 +33,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse(BAD_REQUEST, details);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
 }

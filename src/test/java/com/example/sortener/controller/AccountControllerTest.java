@@ -1,8 +1,7 @@
 package com.example.sortener.controller;
 
-import com.example.sortener.service.AccountService;
 import com.example.sortener.exceptions.CustomExceptionHandler;
-import com.example.sortener.validator.ApplicationValidator;
+import com.example.sortener.service.AccountService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,9 +31,6 @@ public class AccountControllerTest {
     private AccountService accountService;
 
     @Mock
-    private ApplicationValidator validator;
-
-    @Mock
     HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
     @Before
@@ -55,7 +51,6 @@ public class AccountControllerTest {
         mockMvc.perform(get("/statistics/" + "juraj", mockedRequest).contentType(APPLICATION_JSON_VALUE).content("{}"))
                 .andExpect(status().isOk()).andReturn();
 
-//        verify(validator, times(1)).authenticate(any());
         verify(accountService, times(1)).getStatistics(any());
     }
 
