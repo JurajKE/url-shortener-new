@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static java.lang.System.currentTimeMillis;
@@ -31,9 +32,9 @@ public class ShortenerController {
     private final Logger logger = getLogger(ShortenerController.class);
 
     @PostMapping("register")
-    public ResponseEntity<ResponseUrlDto> registerUrl(Authentication authentication, @RequestBody RequestUrlDto dto) {
+    public ResponseEntity<ResponseUrlDto> registerUrl(HttpServletRequest authentication, @RequestBody RequestUrlDto dto) {
         long runTime = currentTimeMillis();
-        var url = shortenerService.saveShortUrl(dto, authentication.getName());
+        var url = shortenerService.saveShortUrl(dto, validator.getAccountId(authentication));
         logger.debug("Register new url: took {} millis", currentTimeMillis() - runTime);
         return ok(url);
     }

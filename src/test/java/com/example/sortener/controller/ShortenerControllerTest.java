@@ -5,7 +5,6 @@ import com.example.sortener.dto.shortener.ResponseUrlDto;
 import com.example.sortener.exceptions.CustomExceptionHandler;
 import com.example.sortener.service.ShortenerService;
 import com.example.sortener.validator.ApplicationValidator;
-import com.example.sortener.validator.ApplicationValidatorTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
