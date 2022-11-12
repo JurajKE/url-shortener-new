@@ -35,11 +35,8 @@ public class SwaggerConfig {
                 .build();
     }
 
-
     //for Swagger api doc generation
     //http://localhost:8080/v2/api-docs
 
-    //TODO zistit preco swagger ide len manualne
-    //help dokoncit
-
+    //TODO zistit preco swagger ide len manualne a ako povolit nieco ine okem /account
 }

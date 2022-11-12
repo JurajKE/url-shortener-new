@@ -4,7 +4,6 @@ import com.example.sortener.dto.shortener.RequestUrlDto;
 import com.example.sortener.dto.shortener.ResponseUrlDto;
 import com.example.sortener.entity.Url;
 import com.example.sortener.repository.AccountRepository;
-import com.example.sortener.validator.ApplicationValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
