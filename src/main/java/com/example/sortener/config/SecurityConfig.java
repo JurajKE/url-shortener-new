@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/account", "help", "/v2/api-docs", "/swagger-ui/**")
+                .antMatchers("/account")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

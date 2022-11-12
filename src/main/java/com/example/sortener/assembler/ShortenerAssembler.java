@@ -10,8 +10,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import static com.example.sortener.constants.AppConstants.APP_LINK;
+import static com.example.sortener.constants.AppConstants.CHARACTERS;
 import static java.util.Objects.isNull;
 import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 @Component
 @RequiredArgsConstructor
@@ -19,8 +21,6 @@ public class ShortenerAssembler {
 
     @NonNull
     private final AccountRepository accountRepository;
-    @NonNull
-    private final ApplicationValidator validator;
 
     public Url assembleEntity(RequestUrlDto dto, String accountId) {
         if (isNull(dto)) {
@@ -29,7 +29,7 @@ public class ShortenerAssembler {
 
         var url = new Url();
         url.setOriginalUrl(dto.getUrl());
-        url.setShortUrl(validator.encodedUrl(dto.getUrl()));
+        url.setShortUrl(random(10, CHARACTERS));
         url.setRedirectType(dto.getRedirectType() == 0 ? 302 : dto.getRedirectType());
         ofNullable(accountRepository.findByAccountId(accountId)).ifPresent(url::setAccountId);
 

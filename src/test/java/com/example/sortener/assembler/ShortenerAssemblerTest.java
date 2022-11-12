@@ -5,7 +5,6 @@ import com.example.sortener.dto.shortener.ResponseUrlDto;
 import com.example.sortener.entity.Account;
 import com.example.sortener.entity.Url;
 import com.example.sortener.repository.AccountRepository;
-import com.example.sortener.validator.ApplicationValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static com.example.sortener.constants.AppConstants.APP_LINK;
 import static com.example.sortener.constants.TestConstants.*;
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,15 +24,12 @@ public class ShortenerAssemblerTest {
     private ShortenerAssembler shortenerAssembler;
     @Mock
     private AccountRepository accountRepository;
-    @Mock
-    private ApplicationValidator validator;
     private RequestUrlDto urlDto;
     private Url url;
 
     @Test
     public void assembleEntity_whenDtoNotNull_returnAssembledEntity() {
         when(accountRepository.findByAccountId(ACCOUNT_ID)).thenReturn(new Account());
-        when(validator.encodedUrl(any())).thenReturn(SHORT_URL);
         Url result = shortenerAssembler.assembleEntity(urlDto, ACCOUNT_ID);
 
         assertNotNull(result);

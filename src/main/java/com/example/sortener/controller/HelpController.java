@@ -17,7 +17,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 public class HelpController {
 
-    @GetMapping(path = "help", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(path = "help")
     public ResponseEntity<String> getHelp() {
         return ok(HELP_PAGE);
     }
