@@ -1,11 +1,11 @@
 package com.example.sortener.controller;
 
-import com.example.sortener.entity.Account;
-import com.example.sortener.service.ShortenerService;
 import com.example.sortener.dto.shortener.RequestUrlDto;
 import com.example.sortener.dto.shortener.ResponseUrlDto;
 import com.example.sortener.exceptions.CustomExceptionHandler;
+import com.example.sortener.service.ShortenerService;
 import com.example.sortener.validator.ApplicationValidator;
+import com.example.sortener.validator.ApplicationValidatorTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +15,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.servlet.http.HttpServletRequest;
-
-import static com.example.sortener.constants.TestConstants.*;
+import static com.example.sortener.constants.TestConstants.SHORT_URL;
+import static com.example.sortener.constants.TestConstants.URL;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -36,8 +35,8 @@ public class ShortenerControllerTest {
     @Mock
     private ShortenerService shortenerService;
 
-//    @Mock
-//    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+    @Mock
+    private ApplicationValidator validator;
 
     @Mock
     Authentication authentication = mock(Authentication.class);
@@ -49,7 +48,6 @@ public class ShortenerControllerTest {
         when(shortenerService.saveShortUrl(any(), any())).thenReturn(new ResponseUrlDto());
 
         dto.setUrl(URL);
-//        mockedRequest.setAttribute(ACCOUNT_ID, new Account());
     }
 
     @Test

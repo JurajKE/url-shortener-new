@@ -34,7 +34,12 @@ public class SwaggerConfig {
                 .contact(new Contact("Juraj", "https://neniAleMoznoKedSaNaucimFEBude.sk", "pacholskyj@gmail.com"))
                 .build();
     }
+
+
     //for Swagger api doc generation
     //http://localhost:8080/v2/api-docs
+
+    //TODO zistit preco swagger ide len manualne
+    //help dokoncit
 
 }

@@ -34,12 +34,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.csrf()
                 .disable()
                 .httpBasic()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/account", "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
+                .antMatchers("/account", "help", "/v2/api-docs", "/swagger-ui/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
