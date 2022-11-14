@@ -14,6 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static com.example.sortener.constants.TestConstants.SHORT_URL;
 import static com.example.sortener.constants.TestConstants.URL;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,7 +40,7 @@ public class ShortenerControllerTest {
     private ApplicationValidator validator;
 
     @Mock
-    Authentication authentication = mock(Authentication.class);
+    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
     private final RequestUrlDto dto = new RequestUrlDto();
 
     @Before
@@ -51,7 +53,7 @@ public class ShortenerControllerTest {
 
     @Test
     public void registerUrl_whenDtoIsNotNull_returnOk() throws Exception {
-        mockMvc.perform(post("/register", authentication).contentType(APPLICATION_JSON_VALUE).content("{}"))
+        mockMvc.perform(post("/register", mockedRequest).contentType(APPLICATION_JSON_VALUE).content("{}"))
                 .andExpect(status().isOk()).andReturn();
 
         verify(shortenerService, times(1)).saveShortUrl(any(), any());

@@ -2,7 +2,9 @@ package com.example.sortener.controller;
 
 import com.example.sortener.dto.account.RequestAccountDto;
 import com.example.sortener.dto.account.ResponseAccountDto;
+import com.example.sortener.exceptions.MissingHeaderInfoException;
 import com.example.sortener.service.AccountService;
+import com.example.sortener.validator.ApplicationValidator;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 import static java.lang.System.currentTimeMillis;
@@ -23,6 +26,9 @@ import static org.springframework.http.ResponseEntity.ok;
 public class AccountController {
     @NonNull
     private final AccountService accountService;
+
+    @NonNull
+    private final ApplicationValidator validator;
     private final Logger logger = getLogger(AccountController.class);
 
     @PostMapping("/account")
@@ -34,11 +40,15 @@ public class AccountController {
     }
 
     @GetMapping("statistics/{accountId}")
-    public ResponseEntity<Map<String, Integer>> getStatistics(@PathVariable String accountId) {
+    public ResponseEntity<Map<String, Integer>> getStatistics(@PathVariable String accountId, HttpServletRequest request) {
         var runTime = currentTimeMillis();
-        var statistics = accountService.getStatistics(accountId);
-        logger.debug("Getting statistics for user: {} took {} millis", accountId, currentTimeMillis() - runTime);
-        return ok(statistics);
+        if (accountId.equals(validator.getAccountId(request))) {
+            var statistics = accountService.getStatistics(accountId);
+            logger.debug("Getting statistics for user: {} took {} millis", accountId, currentTimeMillis() - runTime);
+            return ok(statistics);
+        } else {
+            throw new MissingHeaderInfoException("Username and path do not match");
+        }
     }
 
 }
